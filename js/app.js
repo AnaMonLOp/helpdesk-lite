@@ -1,5 +1,7 @@
 let tickets = [];
 let currentSearchQuery = '';
+let currentStatusFilter = 'Todos';
+let currentPriorityFilter = 'Todas';
 
 // Elementos del DOM
 const ticketsContainer = document.querySelector('#tickets-container');
@@ -8,6 +10,8 @@ const btnCancelForm = document.querySelector('#btn-cancel-form');
 const formSection = document.querySelector('#form-section');
 const ticketForm = document.querySelector('#ticket-form');
 const searchInput = document.querySelector('#search-input');
+const statusButtons = document.querySelectorAll('[data-filter-type="status"]');
+const priorityFilterSelect = document.querySelector('#priority-filter');
 
 // Generar un folio único para cada ticket
 const generateFolio = (index) => {
@@ -18,11 +22,16 @@ const generateFolio = (index) => {
 const renderTickets = () => {
     // Filtrar tickets según la búsqueda
     const filteredTickets = tickets.filter(ticket => {
+        const matchesStatus = currentStatusFilter === 'Todos' || ticket.status === currentStatusFilter;
+        const matchesPriority = currentPriorityFilter === 'Todas' || ticket.priority === currentPriorityFilter;
+
         const query = currentSearchQuery.trim().toLowerCase();
-        return query === '' || 
+        const matchesSearch = query === '' || 
             ticket.folio.toLowerCase().includes(query) ||
             ticket.title.toLowerCase().includes(query) ||
             ticket.description.toLowerCase().includes(query);
+
+        return matchesStatus && matchesPriority && matchesSearch;
     });
     
     ticketsContainer.innerHTML = '';
@@ -41,7 +50,7 @@ const renderTickets = () => {
         article.classList.add('ticket-card');
 
         const statusClass = ticket.status.toLowerCase().replace(' ', '-');
-        const priorityClass = `priority-${ticket.priority.toLowerCase()}`;
+        const priorityClass = `priority-${ticket.priority.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
 
         // Formato de fecha (DD/MM/AAAA HH:MM)
         const dateObj = new Date(ticket.createdAt);
@@ -106,8 +115,25 @@ ticketForm.addEventListener('submit', (e) => {
     renderTickets();
 });
 
+// Evento de búsqueda y filtros
 searchInput.addEventListener('input', (e) => {
     currentSearchQuery = e.target.value;
+    renderTickets();
+});
+
+// Eventos de filtro por estado
+statusButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        statusButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentStatusFilter = btn.dataset.filterValue;
+        renderTickets();
+    });
+});
+
+// Evento de filtro por prioridad
+priorityFilterSelect.addEventListener('change', (e) => {
+    currentPriorityFilter = e.target.value;
     renderTickets();
 });
 

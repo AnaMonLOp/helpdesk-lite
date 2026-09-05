@@ -22,7 +22,7 @@
     --status-cancelado-text: #b91c1c;
 
     /* Badges de Prioridad */
-    --priority-critica: #ef4444;
+    --priority-crítica: #ef4444;
     --priority-alta: #f97316;
     --priority-media: #eab308;
     --priority-baja: #3b82f6;
@@ -353,7 +353,7 @@ ul {
     color: white;
 }
 
-.priority-critica { background-color: var(--priority-critica); }
+.priority-critica { background-color: var(--priority-crítica); }
 .priority-alta { background-color: var(--priority-alta); }
 .priority-media { background-color: var(--priority-media); }
 .priority-baja { background-color: var(--priority-baja); }
