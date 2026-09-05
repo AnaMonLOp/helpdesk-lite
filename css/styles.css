@@ -370,8 +370,8 @@ ul {
 
 .ticket-meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.35rem;
     font-size: 0.85rem;
     color: var(--color-text-secondary);
     border-top: 1px dashed var(--color-border);
