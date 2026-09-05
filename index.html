@@ -41,6 +41,71 @@
             </div>
         </section>
 
+        <!-- Sección del Formulario (Modal / Desplegable) -->
+        <section id="form-section" class="form-section hidden" aria-label="Formulario de registro de ticket">
+            <div class="form-container">
+                <h2>NUEVO TICKET</h2>
+                <form id="ticket-form" novalidate>
+                    <div class="form-group">
+                        <label for="ticket-title">Título *</label>
+                        <input 
+                            type="text" 
+                            id="ticket-title" 
+                            name="title" 
+                            placeholder="Ej. Internet caído en laboratorio" 
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ticket-description">Descripción *</label>
+                        <textarea 
+                            id="ticket-description" 
+                            name="description" 
+                            rows="3" 
+                            placeholder="Describe el problema de forma detallada..." 
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ticket-category">Categoría *</label>
+                            <select id="ticket-category" name="category" required>
+                                <option value="" disabled selected>Seleccione una categoría</option>
+                                <option value="Hardware">Hardware</option>
+                                <option value="Software">Software</option>
+                                <option value="Red">Red</option>
+                                <option value="Accesos">Accesos</option>
+                                <option value="Correo">Correo</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ticket-priority">Prioridad *</label>
+                            <select id="ticket-priority" name="priority" required>
+                                <option value="" disabled selected>Seleccione prioridad</option>
+                                <option value="Baja">Baja</option>
+                                <option value="Media">Media</option>
+                                <option value="Alta">Alta</option>
+                                <option value="Crítica">Crítica</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="btn-cancel-form" class="button button-secondary">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="button button-primary">
+                            Crear Ticket
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
         <!-- Barra de Búsqueda y Filtros -->
         <section class="controls-section" aria-label="Filtros y búsqueda de tickets">
             <div class="search-box">
