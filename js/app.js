@@ -1,4 +1,5 @@
 let tickets = [];
+let currentSearchQuery = '';
 
 // Elementos del DOM
 const ticketsContainer = document.querySelector('#tickets-container');
@@ -6,6 +7,7 @@ const btnToggleForm = document.querySelector('#btn-toggle-form');
 const btnCancelForm = document.querySelector('#btn-cancel-form');
 const formSection = document.querySelector('#form-section');
 const ticketForm = document.querySelector('#ticket-form');
+const searchInput = document.querySelector('#search-input');
 
 // Generar un folio único para cada ticket
 const generateFolio = (index) => {
@@ -14,9 +16,18 @@ const generateFolio = (index) => {
 
 // Renderizar tarjetas de tickets
 const renderTickets = () => {
+    // Filtrar tickets según la búsqueda
+    const filteredTickets = tickets.filter(ticket => {
+        const query = currentSearchQuery.trim().toLowerCase();
+        return query === '' || 
+            ticket.folio.toLowerCase().includes(query) ||
+            ticket.title.toLowerCase().includes(query) ||
+            ticket.description.toLowerCase().includes(query);
+    });
+    
     ticketsContainer.innerHTML = '';
 
-    if (tickets.length === 0) {
+    if (filteredTickets.length === 0) {
         ticketsContainer.innerHTML = `
             <div class="empty-message">
                 <p>No se encontraron tickets registrados o coincidentes.</p>
@@ -25,7 +36,7 @@ const renderTickets = () => {
         return;
     }
 
-    tickets.forEach(ticket => {
+    filteredTickets.forEach(ticket => {
         const article = document.createElement('article');
         article.classList.add('ticket-card');
 
@@ -94,5 +105,11 @@ ticketForm.addEventListener('submit', (e) => {
 
     renderTickets();
 });
+
+searchInput.addEventListener('input', (e) => {
+    currentSearchQuery = e.target.value;
+    renderTickets();
+});
+
 // Inicialización
 renderTickets();
