@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HelpDesk Lite - Sistema de Gestión de Tickets de Soporte Técnico">
+    <title>HelpDesk Lite - Sistema de Tickets</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <!-- Encabezado Principal -->
+    <header class="header">
+        <nav class="navbar container">
+            <div class="logo">
+                <h1>HelpDesk Lite</h1>
+            </div>
+            <button id="btn-toggle-form" class="button button-primary">
+                + Nuevo Ticket
+            </button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Dashboard / Indicadores -->
+        <section class="dashboard-section" aria-label="Indicadores de tickets">
+            <div class="metric-card">
+                <span class="metric-title">TOTAL</span>
+                <span id="metric-total" class="metric-value">0</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-title">NUEVOS</span>
+                <span id="metric-nuevos" class="metric-value">0</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-title">PROCESO</span>
+                <span id="metric-proceso" class="metric-value">0</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-title">RESUELTOS</span>
+                <span id="metric-resueltos" class="metric-value">0</span>
+            </div>
+        </section>
+
+        <!-- Barra de Búsqueda y Filtros -->
+        <section class="controls-section" aria-label="Filtros y búsqueda de tickets">
+            <div class="search-box">
+                <label for="search-input" class="sr-only">Buscar ticket</label>
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    placeholder="Buscar por folio, título o descripción..." 
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="filters-container">
+                <div class="filter-group">
+                    <span class="filter-label">Estado:</span>
+                    <div class="status-buttons">
+                        <button class="filter-btn active" data-filter-type="status" data-filter-value="Todos">Todos</button>
+                        <button class="filter-btn" data-filter-type="status" data-filter-value="Nuevo">Nuevo</button>
+                        <button class="filter-btn" data-filter-type="status" data-filter-value="En proceso">Proceso</button>
+                        <button class="filter-btn" data-filter-type="status" data-filter-value="Resuelto">Resuelto</button>
+                        <button class="filter-btn" data-filter-type="status" data-filter-value="Cerrado">Cerrado</button>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label for="priority-filter" class="filter-label">Prioridad:</label>
+                    <select id="priority-filter" class="select-filter">
+                        <option value="Todas">Todas</option>
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Crítica">Crítica</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contenedor Principal de Lista de Tickets -->
+        <section class="tickets-section" aria-label="Lista de tickets">
+            <div id="tickets-container" class="tickets-grid">
+                <!-- Se renderizarán dinámicamente desde JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de Página -->
+    <footer class="footer">
+        <div class="container">
+            <p><strong>HelpDesk Lite</strong> - Sistema de Gestión de Tickets de Soporte Técnico</p>
+            <p>Proyecto Académico - Aplicaciones de Internet</p>
+        </div>
+    </footer>
+
+    <script src="./js/app.js"></script>
+</body>
+</html>
