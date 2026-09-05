@@ -1,0 +1,468 @@
+:root {
+    --color-primary: #2563eb;
+    --color-primary-dark: #1d4ed8;
+    --color-background: #f8fafc;
+    --color-surface: #ffffff;
+    --color-text: #0f172a;
+    --color-text-secondary: #64748b;
+    --color-border: #e2e8f0;
+    --border-radius: 12px;
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+
+    /* Badges de Estado */
+    --status-nuevo: #dbeafe;
+    --status-nuevo-text: #1d4ed8;
+    --status-proceso: #fef3c7;
+    --status-proceso-text: #d97706;
+    --status-resuelto: #dcfce7;
+    --status-resuelto-text: #15803d;
+    --status-cerrado: #f1f5f9;
+    --status-cerrado-text: #475569;
+    --status-cancelado: #fee2e2;
+    --status-cancelado-text: #b91c1c;
+
+    /* Badges de Prioridad */
+    --priority-critica: #ef4444;
+    --priority-alta: #f97316;
+    --priority-media: #eab308;
+    --priority-baja: #3b82f6;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    width: min(1100px, 92%);
+    margin-inline: auto;
+}
+
+/* Header & Navbar */
+.header {
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+}
+
+/* Dashboard / Indicadores */
+.dashboard-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin: 2rem 0;
+}
+
+.metric-card {
+    background-color: var(--color-surface);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.metric-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.05rem;
+}
+
+.metric-value {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-top: 0.25rem;
+}
+
+/* Botones reutilizables */
+.button {
+    display: inline-block;
+    padding: 0.7rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.button-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.button-primary:hover:not(:disabled) {
+    background-color: var(--color-primary-dark);
+}
+
+.button-secondary {
+    background-color: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+.button-secondary:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.button-danger {
+    background-color: transparent;
+    border-color: var(--status-cancelado-text);
+    color: var(--status-cancelado-text);
+}
+
+.button-danger:hover:not(:disabled) {
+    background-color: var(--status-cancelado);
+}
+
+/* Seccion Formulario */
+.form-section {
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.form-section.hidden {
+    display: none;
+}
+
+.form-container {
+    background-color: var(--color-surface);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.form-container h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.35rem;
+    text-align: center;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    background-color: var(--color-background);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Filtros y Busqueda */
+.controls-section {
+    background-color: var(--color-surface);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.filters-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.filter-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+}
+
+.status-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: 50px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    border-color: var(--color-primary);
+}
+
+.filter-btn.active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.select-filter {
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background-color: var(--color-surface);
+    font-size: 0.9rem;
+}
+
+/* Tarjetas de Tickets */
+.tickets-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.ticket-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ticket-folio {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--color-primary);
+}
+
+.ticket-priority {
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.25rem 0.65rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    color: white;
+}
+
+.priority-critica { background-color: var(--priority-critica); }
+.priority-alta { background-color: var(--priority-alta); }
+.priority-media { background-color: var(--priority-media); }
+.priority-baja { background-color: var(--priority-baja); }
+
+.ticket-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.ticket-description {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+}
+
+.ticket-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    border-top: 1px dashed var(--color-border);
+    padding-top: 0.75rem;
+}
+
+.ticket-status-badge {
+    padding: 0.25rem 0.65rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.status-nuevo { background-color: var(--status-nuevo); color: var(--status-nuevo-text); }
+.status-proceso { background-color: var(--status-proceso); color: var(--status-proceso-text); }
+.status-resuelto { background-color: var(--status-resuelto); color: var(--status-resuelto-text); }
+.status-cerrado { background-color: var(--status-cerrado); color: var(--status-cerrado-text); }
+.status-cancelado { background-color: var(--status-cancelado); color: var(--status-cancelado-text); }
+
+.ticket-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+}
+
+/* Estado Vacio */
+.empty-message {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--color-text-secondary);
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    border: 1px dashed var(--color-border);
+}
+
+/* Footer */
+.footer {
+    padding: 2.5rem 0;
+    background-color: #0f172a;
+    color: #ffffff;
+    text-align: center;
+    margin-top: auto;
+}
+
+.footer p {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Responsive / Media Queries */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 1rem 0;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .filters-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ticket-actions {
+        flex-direction: column;
+    }
+
+    .ticket-actions .button {
+        width: 100%;
+    }
+}
