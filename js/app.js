@@ -153,6 +153,9 @@ const handleStateTransition = (ticketId, action) => {
         ticket.status = 'Cerrado';
     } else if (action === 'cancelar' && (ticket.status === 'Nuevo' || ticket.status === 'En proceso')) {
         ticket.status = 'Cancelado';
+    } else {
+        console.warn(`Transición no permitida: ${action} para estado ${ticket.status}`);
+        return;
     }
     
     saveTicketsToStorage();
