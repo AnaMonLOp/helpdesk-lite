@@ -130,6 +130,17 @@ const configureActionButtons = () => {
     });
 };
 
+const saveTicketsToStorage = () => {
+    localStorage.setItem('helpdesk_tickets', JSON.stringify(tickets));
+};
+
+const loadTicketsFromStorage = () => {
+    const storedTickets = localStorage.getItem('helpdesk_tickets');
+    if (storedTickets) {
+        tickets = JSON.parse(storedTickets);
+    }
+};
+
 const handleStateTransition = (ticketId, action) => {
     const ticket = tickets.find(t => t.id === ticketId);
     if (!ticket) return;
@@ -143,7 +154,8 @@ const handleStateTransition = (ticketId, action) => {
     } else if (action === 'cancelar' && (ticket.status === 'Nuevo' || ticket.status === 'En proceso')) {
         ticket.status = 'Cancelado';
     }
-
+    
+    saveTicketsToStorage();
     updateDashboard();
     renderTickets();
 };
@@ -184,6 +196,8 @@ ticketForm.addEventListener('submit', (e) => {
     };
 
     tickets.push(newTicket);
+    saveTicketsToStorage();
+    updateDashboard();
     ticketForm.reset();
     formSection.classList.add('hidden');
 
@@ -213,5 +227,6 @@ priorityFilterSelect.addEventListener('change', (e) => {
 });
 
 // Inicialización
+loadTicketsFromStorage();
 updateDashboard();
 renderTickets();
