@@ -13,9 +13,50 @@ const searchInput = document.querySelector('#search-input');
 const statusButtons = document.querySelectorAll('[data-filter-type="status"]');
 const priorityFilterSelect = document.querySelector('#priority-filter');
 
+// Métricas del Dashboard
+const metricTotal = document.querySelector('#metric-total');
+const metricNuevos = document.querySelector('#metric-nuevos');
+const metricProceso = document.querySelector('#metric-proceso');
+const metricResueltos = document.querySelector('#metric-resueltos');
+
 // Generar un folio único para cada ticket
 const generateFolio = (index) => {
     return `HD-${String(index).padStart(4, '0')}`;
+};
+
+// Actualizar métricas del Dashboard
+const updateDashboard = () => {
+    const total = tickets.length;
+    const nuevos = tickets.filter(t => t.status === 'Nuevo').length;
+    const proceso = tickets.filter(t => t.status === 'En proceso').length;
+    const resueltos = tickets.filter(t => t.status === 'Resuelto').length;
+
+    if (metricTotal) metricTotal.textContent = total;
+    if (metricNuevos) metricNuevos.textContent = nuevos;
+    if (metricProceso) metricProceso.textContent = proceso;
+    if (metricResueltos) metricResueltos.textContent = resueltos;
+};
+
+// Función para obtener el HTML de los botones de acción según el estado del ticket
+const getActionButtonHTML = (ticket) => {
+    if (ticket.status === 'Nuevo') {
+        return `
+            <button class="button button-primary action-btn" data-id="${ticket.id}" data-action="atender">Iniciar atención</button>
+            <button class="button button-danger action-btn" data-id="${ticket.id}" data-action="cancelar">Cancelar</button>
+        `;
+    }
+    if (ticket.status === 'En proceso') {
+        return `
+            <button class="button button-primary action-btn" data-id="${ticket.id}" data-action="resolver">Resolver</button>
+            <button class="button button-danger action-btn" data-id="${ticket.id}" data-action="cancelar">Cancelar</button>
+        `;
+    }
+    if (ticket.status === 'Resuelto') {
+        return `
+            <button class="button button-secondary action-btn" data-id="${ticket.id}" data-action="cerrar">Cerrar ticket</button>
+        `;
+    }
+    return '';
 };
 
 // Renderizar tarjetas de tickets
@@ -67,10 +108,44 @@ const renderTickets = () => {
                 <p>${ticket.category} · Creado: ${formattedDate}</p>
                 <p>Estado: <span class="ticket-status-badge status-${statusClass}">${ticket.status.toUpperCase()}</span></p>
             </div>
-         `;
+            <div class="ticket-actions">
+                ${getActionButtonHTML(ticket)}
+            </div>
+        `;
 
         ticketsContainer.appendChild(article);
     });
+    configureActionButtons();
+};
+
+// Manejo de acciones y transiciones de estado
+const configureActionButtons = () => {
+    const actionButtons = document.querySelectorAll('.action-btn');
+    actionButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = Number(e.target.dataset.id);
+            const action = e.target.dataset.action;
+            handleStateTransition(id, action);
+        });
+    });
+};
+
+const handleStateTransition = (ticketId, action) => {
+    const ticket = tickets.find(t => t.id === ticketId);
+    if (!ticket) return;
+
+    if (action === 'atender' && ticket.status === 'Nuevo') {
+        ticket.status = 'En proceso';
+    } else if (action === 'resolver' && ticket.status === 'En proceso') {
+        ticket.status = 'Resuelto';
+    } else if (action === 'cerrar' && ticket.status === 'Resuelto') {
+        ticket.status = 'Cerrado';
+    } else if (action === 'cancelar' && (ticket.status === 'Nuevo' || ticket.status === 'En proceso')) {
+        ticket.status = 'Cancelado';
+    }
+
+    updateDashboard();
+    renderTickets();
 };
 
 // Interacción y creación de tickets
@@ -138,4 +213,5 @@ priorityFilterSelect.addEventListener('change', (e) => {
 });
 
 // Inicialización
+updateDashboard();
 renderTickets();
