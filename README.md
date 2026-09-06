@@ -21,7 +21,7 @@ Aplicación web frontend que permite registrar, dar seguimiento y administrar el
 ## Cómo Ejecutar el Proyecto
 1. **Clonar o Descargar el Repositorio:**
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone <https://github.com/AnaMonLOp/helpdesk-lite.git>
    cd helpdesk-lite
 
 ## Autor
